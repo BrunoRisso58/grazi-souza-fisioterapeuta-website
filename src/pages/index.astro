@@ -1,0 +1,234 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import Icon from "../components/Icon.astro";
+import Faq from "../components/Faq.astro";
+---
+
+<Layout>
+  <!-- HERO -->
+  <section class="overflow-hidden bg-white">
+    <div class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:grid-cols-2 md:px-8 md:py-24">
+      <div>
+        <span
+          class="inline-flex items-center rounded-full bg-pink-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-pink-deep"
+        >
+          Atendimento particular em casa
+        </span>
+
+        <h1 class="mt-5 text-4xl font-extrabold leading-[1.08] tracking-tight text-ink md:text-5xl">
+          Fisioterapia em casa, do início ao fim, sempre comigo.
+        </h1>
+
+        <p class="mt-5 max-w-md text-lg leading-relaxed text-ink-soft">
+          Atendimento particular de fisioterapia em casa, em Campinas e região, pra crianças,
+          adultos e idosos. Você me conta a necessidade, eu monto um plano individual e acompanho
+          cada sessão pessoalmente, sem clínica e sem trocar de profissional no meio do tratamento.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-4">
+          <WhatsAppButton label="Agendar pelo WhatsApp" />
+          <a
+            href="/servicos"
+            class="inline-flex items-center gap-1.5 text-base font-semibold text-ink transition-colors hover:text-brand"
+          >
+            Conhecer os atendimentos
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3 text-sm text-ink-soft">
+          <span class="rounded-full border border-mint-border bg-mint px-3 py-1.5">CREFITO-3 / 453195-F</span>
+          <span class="rounded-full border border-mint-border bg-mint px-3 py-1.5">Atendimento individual</span>
+          <span class="rounded-full border border-mint-border bg-mint px-3 py-1.5">Atende em Campinas e região</span>
+          <span class="rounded-full border border-pink-soft bg-pink-soft/60 px-3 py-1.5 text-pink-deep">Pediatria, geriatria e pilates</span>
+        </div>
+      </div>
+
+      <div class="relative mx-auto w-full max-w-sm">
+        <div class="absolute -right-6 -top-6 h-40 w-40 rounded-full bg-pink-soft blur-2xl" aria-hidden="true"></div>
+        <div class="absolute -bottom-8 -left-6 h-44 w-44 rounded-full bg-mint blur-2xl" aria-hidden="true"></div>
+        <div class="relative aspect-[4/5] overflow-hidden rounded-3xl border border-mint-border bg-mint shadow-xl shadow-emerald-900/5">
+          <img
+            src="/img/fotos/grazi1.png"
+            alt="Grazi Souza, fisioterapeuta, de jaleco branco"
+            class="h-full w-full object-cover object-top"
+          />
+        </div>
+        <div class="absolute -bottom-5 -right-5 hidden items-center gap-2 rounded-2xl border border-mint-border bg-white px-4 py-3 shadow-lg shadow-emerald-900/10 sm:flex">
+          <Icon name="badge" class="h-6 w-6 flex-none text-brand" />
+          <div class="leading-tight">
+            <p class="text-sm font-bold text-ink">CREFITO-3 ativo</p>
+            <p class="text-xs text-ink-soft">453195-F</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section class="bg-mint">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <h2 class="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
+        Por que atendimento em casa
+      </h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          [
+            {
+              icon: "home" as const,
+              tile: "bg-mint text-brand",
+              title: "Comodidade",
+              text: "Sem deslocamento até a clínica. O atendimento acontece na sua casa, no horário combinado com você.",
+            },
+            {
+              icon: "user" as const,
+              tile: "bg-pink-soft text-pink-deep",
+              title: "Atenção individual",
+              text: "Cada sessão é só sua, sem dividir atenção entre vários pacientes ao mesmo tempo.",
+            },
+            {
+              icon: "shield" as const,
+              tile: "bg-mint text-brand",
+              title: "Segurança",
+              text: "Ambiente conhecido facilita a recuperação, principalmente quando o paciente é uma criança ou uma pessoa idosa.",
+            },
+            {
+              icon: "heart" as const,
+              tile: "bg-pink-soft text-pink-deep",
+              title: "Acompanhamento de perto",
+              text: "Sou eu quem avalia, trata e acompanha a evolução, do primeiro ao último dia.",
+            },
+          ].map((item) => (
+            <div class="rounded-2xl border border-mint-border bg-white p-6">
+              <div class={`flex h-11 w-11 items-center justify-center rounded-xl ${item.tile}`}>
+                <Icon name={item.icon} class="h-5 w-5" />
+              </div>
+              <p class="mt-4 text-base font-bold text-ink">{item.title}</p>
+              <p class="mt-2 leading-relaxed text-ink-soft">{item.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <h2 class="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">Atendimentos</h2>
+      <p class="mt-3 max-w-2xl text-ink-soft">
+        Fisioterapia domiciliar para todas as idades, focada em reabilitação, qualidade de vida
+        e prevenção.
+      </p>
+
+      <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {
+          [
+            {
+              icon: "star" as const,
+              title: "Pediatria",
+              text: "Acompanho o desenvolvimento motor da criança no ambiente que ela já conhece, com o tempo e a calma que cada fase pede.",
+              href: "/servicos#pediatria",
+            },
+            {
+              icon: "user" as const,
+              title: "Adultos",
+              text: "Fisioterapia para dores, lesões, recuperação pós-cirúrgica e reabilitação, em qualquer fase da vida adulta.",
+              href: "/servicos#adultos",
+            },
+            {
+              icon: "cane" as const,
+              title: "Geriatria",
+              text: "Trabalho a reabilitação e a prevenção de quedas com foco na autonomia, sem o desconforto de deslocar um idoso até uma clínica.",
+              href: "/servicos#geriatria",
+            },
+            {
+              icon: "ring" as const,
+              title: "Pilates",
+              text: "Sessões de pilates adaptadas ao seu condicionamento e objetivo, com acompanhamento direto a cada movimento.",
+              href: "/servicos#pilates",
+            },
+          ].map((s) => (
+            <a
+              href={s.href}
+              class="group flex flex-col justify-between rounded-2xl border border-mint-border p-6 transition-colors duration-200 hover:border-brand hover:bg-mint"
+            >
+              <div>
+                <Icon name={s.icon} class="h-7 w-7 text-brand" />
+                <p class="mt-3 text-lg font-bold text-ink">{s.title}</p>
+                <p class="mt-2 leading-relaxed text-ink-soft">{s.text}</p>
+              </div>
+              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
+                Saiba mais
+                <svg class="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE BREVE -->
+  <section class="bg-mint">
+    <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-16 md:grid-cols-2 md:px-8 md:py-20">
+      <div class="relative mx-auto w-full max-w-xs md:order-1">
+        <div class="aspect-[4/5] overflow-hidden rounded-3xl border border-mint-border bg-white shadow-lg shadow-emerald-900/5">
+          <img
+            src="/img/fotos/grazi1.png"
+            alt="Grazi Souza, fisioterapeuta, de jaleco branco"
+            class="h-full w-full object-cover object-top"
+          />
+        </div>
+      </div>
+      <div>
+        <h2 class="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">
+          Quem cuida de você
+        </h2>
+        <p class="mt-4 leading-relaxed text-ink-soft">
+          Sou Grazielle de Souza, fisioterapeuta (CREFITO-3 / 453195-F). Atendo em casa porque
+          uma boa parte da recuperação depende do ambiente. Ninguém se recupera melhor do que
+          perto da própria família, no próprio ritmo.
+        </p>
+        <a
+          href="/sobre"
+          class="mt-6 inline-flex items-center gap-1.5 text-base font-semibold text-brand"
+        >
+          Conhecer minha história
+          <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="border-t border-mint-border bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <Faq />
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <div class="rounded-3xl bg-ink px-6 py-12 text-center md:px-16 md:py-16">
+        <h2 class="text-2xl font-extrabold tracking-tight text-white md:text-3xl">
+          Precisa de fisioterapia em casa pra alguém da sua família em Campinas?
+        </h2>
+        <p class="mx-auto mt-4 max-w-xl text-emerald-50/80">
+          Me manda uma mensagem no WhatsApp. Eu mesma respondo e te explico como funciona.
+        </p>
+        <div class="mt-8 flex justify-center">
+          <WhatsAppButton label="Agendar pelo WhatsApp" class="bg-pink-deep hover:bg-pink-deep" />
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

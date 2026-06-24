@@ -1,0 +1,103 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import Icon from "../components/Icon.astro";
+
+const servicos = [
+  {
+    id: "pediatria",
+    title: "Pediatria",
+    eyebrow: "Home care",
+    icon: "star" as const,
+    text: "Atendimento fisioterapêutico para crianças, em casa, respeitando o tempo e o jeito de cada uma. Trabalho com calma e atenção aos detalhes que fazem diferença no desenvolvimento motor, sem o estresse de uma sala de espera.",
+    bullets: ["Estímulo ao desenvolvimento motor", "Orientação para a família no dia a dia", "Acompanhamento da evolução em casa"],
+    bg: "bg-white",
+  },
+  {
+    id: "adultos",
+    title: "Adultos",
+    eyebrow: "Home care",
+    icon: "user" as const,
+    text: "Fisioterapia domiciliar para dores na coluna e nas articulações, recuperação pós-cirúrgica, lesões e reabilitação física, em qualquer fase da vida adulta, sem precisar se deslocar até uma clínica.",
+    bullets: ["Reabilitação pós-cirúrgica", "Dores na coluna e nas articulações", "Prevenção de lesões"],
+    bg: "bg-mint",
+  },
+  {
+    id: "geriatria",
+    title: "Geriatria",
+    eyebrow: "Home care",
+    icon: "cane" as const,
+    text: "Reabilitação e prevenção para idosos, com foco em autonomia e segurança no dia a dia. Sem o desconforto de deslocar alguém com mobilidade reduzida até uma clínica: a sessão acontece no ambiente que a pessoa já conhece.",
+    bullets: ["Prevenção de quedas", "Manutenção da autonomia", "Reabilitação no ritmo da pessoa"],
+    bg: "bg-white",
+  },
+  {
+    id: "pilates",
+    title: "Pilates",
+    eyebrow: "Bem-estar",
+    icon: "ring" as const,
+    text: "Sessões de pilates adaptadas ao seu condicionamento e objetivo: fortalecimento, postura ou mobilidade, com acompanhamento direto em cada exercício.",
+    bullets: ["Fortalecimento e postura", "Mobilidade e equilíbrio", "Acompanhamento direto em cada exercício"],
+    bg: "bg-mint",
+  },
+];
+---
+
+<Layout title="Serviços">
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-20">
+      <span
+        class="inline-flex items-center rounded-full bg-pink-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-pink-deep"
+      >
+        Atendimentos
+      </span>
+      <h1 class="mt-5 max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight text-ink md:text-5xl">
+        Fisioterapia domiciliar para todas as idades, e pilates particular
+      </h1>
+      <p class="mt-5 max-w-2xl leading-relaxed text-ink-soft">
+        Atendimento em Campinas e região. Avaliação, plano de tratamento e acompanhamento,
+        tudo com a mesma profissional do início ao fim.
+      </p>
+    </div>
+  </section>
+
+  {
+    servicos.map((s, i) => (
+      <section id={s.id} class={`${s.bg} border-t border-mint-border`}>
+        <div class="mx-auto grid max-w-6xl items-center gap-10 px-5 py-14 md:grid-cols-[1.3fr_1fr] md:px-8 md:py-16">
+          <div class={i % 2 === 1 ? "md:order-2" : ""}>
+            <p class="text-xs font-bold uppercase tracking-[0.18em] text-brand">{s.eyebrow}</p>
+            <h2 class="mt-2 text-2xl font-extrabold tracking-tight text-ink md:text-3xl">{s.title}</h2>
+            <p class="mt-4 max-w-2xl leading-relaxed text-ink-soft">{s.text}</p>
+            <ul class="mt-5 flex flex-col gap-2.5">
+              {s.bullets.map((b) => (
+                <li class="flex items-start gap-2.5 text-ink-soft">
+                  <Icon name="check" class="mt-1 h-4 w-4 flex-none text-pink-deep" />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-6">
+              <WhatsAppButton label={`Agendar avaliação: ${s.title}`} />
+            </div>
+          </div>
+          <div class={`mx-auto flex aspect-square w-full max-w-[220px] items-center justify-center rounded-3xl border border-mint-border shadow-lg shadow-emerald-900/5 ${i % 2 === 1 ? "md:order-1" : ""} ${s.bg === "bg-white" ? "bg-mint" : "bg-white"}`}>
+            <Icon name={s.icon} class={`h-20 w-20 ${i % 2 === 1 ? "text-pink-deep" : "text-brand"}`} />
+          </div>
+        </div>
+      </section>
+    ))
+  }
+
+  <section class="bg-mint">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <div class="flex flex-col items-center justify-between gap-6 rounded-3xl bg-ink px-6 py-10 text-center md:flex-row md:px-12 md:text-left">
+        <div>
+          <h2 class="text-xl font-extrabold text-white md:text-2xl">Ainda com dúvidas sobre qual atendimento faz sentido?</h2>
+          <p class="mt-2 text-emerald-50/80">Me conta a situação e eu te oriento.</p>
+        </div>
+        <WhatsAppButton label="Falar no WhatsApp" class="bg-pink-deep hover:bg-pink-deep" />
+      </div>
+    </div>
+  </section>
+</Layout>

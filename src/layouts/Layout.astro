@@ -1,0 +1,70 @@
+---
+import "../styles/global.css";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { INSTAGRAM_URL, SITE_DESCRIPTION, SITE_NAME, WHATSAPP_NUMBER } from "../consts";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = SITE_DESCRIPTION } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME}: Atendimento domiciliar em Campinas`;
+const siteUrl = Astro.site ?? Astro.url.origin;
+const ogImageUrl = new URL("/img/og-image.png", siteUrl).toString();
+
+const localBusinessSchema = {
+  "@context": "https://schema.org",
+  "@type": "Physiotherapy",
+  name: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  url: siteUrl.toString(),
+  telephone: `+${WHATSAPP_NUMBER}`,
+  areaServed: "Campinas e região, SP",
+  sameAs: [INSTAGRAM_URL],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Campinas",
+    addressRegion: "SP",
+    addressCountry: "BR",
+  },
+};
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon-32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/favicon-512.png" sizes="512x512" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:locale" content="pt_BR" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(localBusinessSchema)} is:inline />
+  </head>
+  <body class="flex min-h-dvh flex-col font-sans antialiased">
+    <Header />
+    <main class="flex-1">
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppButton variant="fixed" />
+  </body>
+</html>

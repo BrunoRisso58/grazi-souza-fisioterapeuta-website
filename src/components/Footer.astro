@@ -1,0 +1,89 @@
+---
+import Icon from "./Icon.astro";
+import { CREFITO, INSTAGRAM_HANDLE, INSTAGRAM_URL, NAV_LINKS, PHONE_DISPLAY, WHATSAPP_NUMBER } from "../consts";
+
+const year = new Date().getFullYear();
+const telHref = `tel:+${WHATSAPP_NUMBER}`;
+
+const atendimentos = [
+  { href: "/servicos#pediatria", label: "Pediatria" },
+  { href: "/servicos#adultos", label: "Adultos" },
+  { href: "/servicos#geriatria", label: "Geriatria" },
+  { href: "/servicos#pilates", label: "Pilates" },
+];
+---
+
+<footer class="border-t border-mint-border bg-mint">
+  <div class="mx-auto max-w-6xl px-5 py-12 md:px-8">
+    <div class="grid gap-10 sm:grid-cols-2 md:grid-cols-4">
+      <div>
+        <img src="/img/logo-full.png" alt="Grazi Souza Fisioterapeuta" class="h-16 w-auto" />
+        <p class="mt-3 text-sm leading-relaxed text-ink-soft">
+          Fisioterapia domiciliar em Campinas e região, para todas as idades
+        </p>
+        <p class="mt-4 inline-flex items-center gap-1.5 text-sm text-ink-soft">
+          <Icon name="badge" class="h-4 w-4 text-brand" />
+          {CREFITO}
+        </p>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-ink-soft">Navegação</p>
+        <ul class="mt-3 flex flex-col gap-2">
+          {
+            NAV_LINKS.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-ink-soft transition-colors hover:text-brand">
+                  {link.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-ink-soft">Atendimentos</p>
+        <ul class="mt-3 flex flex-col gap-2">
+          {
+            atendimentos.map((item) => (
+              <li>
+                <a href={item.href} class="text-sm text-ink-soft transition-colors hover:text-pink-deep">
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div>
+        <p class="text-sm font-semibold uppercase tracking-wide text-ink-soft">Contato</p>
+        <ul class="mt-3 flex flex-col gap-2 text-sm text-ink-soft">
+          <li>
+            <a href={telHref} class="inline-flex items-center gap-1.5 transition-colors hover:text-brand">
+              <Icon name="phone" class="h-4 w-4" />
+              {PHONE_DISPLAY}
+            </a>
+          </li>
+          <li>
+            <a
+              href={INSTAGRAM_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 transition-colors hover:text-pink-deep"
+            >
+              <Icon name="instagram" class="h-4 w-4" />
+              {INSTAGRAM_HANDLE}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-col gap-2 border-t border-mint-border pt-6 text-xs text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} Grazi Souza Fisioterapia. Todos os direitos reservados.</p>
+      <p>Atendimento particular, sem convênio · Campinas e região</p>
+    </div>
+  </div>
+</footer>

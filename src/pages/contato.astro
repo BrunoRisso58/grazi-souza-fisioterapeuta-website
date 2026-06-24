@@ -1,0 +1,83 @@
+---
+import Layout from "../layouts/Layout.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import Icon from "../components/Icon.astro";
+import { CREFITO, INSTAGRAM_HANDLE, INSTAGRAM_URL, PHONE_DISPLAY, WHATSAPP_NUMBER } from "../consts";
+
+const telHref = `tel:+${WHATSAPP_NUMBER}`;
+---
+
+<Layout title="Contato">
+  <section class="bg-white">
+    <div class="mx-auto max-w-3xl px-5 py-16 text-center md:px-8 md:py-24">
+      <span
+        class="inline-flex items-center rounded-full bg-pink-soft px-4 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-pink-deep"
+      >
+        Contato
+      </span>
+      <h1 class="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight text-ink md:text-5xl">
+        Vamos conversar?
+      </h1>
+      <p class="mx-auto mt-5 max-w-xl leading-relaxed text-ink-soft">
+        O jeito mais rápido de chegar até mim é pelo WhatsApp. Me conta a necessidade
+        (pediatria, geriatria ou pilates) e eu mesma respondo, sem formulário nem intermediário.
+      </p>
+      <div class="mt-8 flex justify-center">
+        <WhatsAppButton label="Agendar pelo WhatsApp" class="px-8 py-4 text-lg" />
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-mint">
+    <div class="mx-auto max-w-6xl px-5 py-14 md:px-8">
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <a href={telHref} class="rounded-2xl border border-mint-border bg-white p-6 transition-colors hover:border-brand">
+          <Icon name="phone" class="h-6 w-6 text-brand" />
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-ink-soft">Telefone</p>
+          <p class="mt-1 text-lg font-bold text-ink">{PHONE_DISPLAY}</p>
+        </a>
+        <a
+          href={INSTAGRAM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-2xl border border-mint-border bg-white p-6 transition-colors hover:border-pink-deep"
+        >
+          <Icon name="instagram" class="h-6 w-6 text-pink-deep" />
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-ink-soft">Instagram</p>
+          <p class="mt-1 text-lg font-bold text-ink">{INSTAGRAM_HANDLE}</p>
+        </a>
+        <div class="rounded-2xl border border-mint-border bg-white p-6">
+          <Icon name="mappin" class="h-6 w-6 text-brand" />
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-ink-soft">Área de atendimento</p>
+          <p class="mt-1 text-lg font-bold text-ink">Campinas e região</p>
+        </div>
+        <div class="rounded-2xl border border-mint-border bg-white p-6">
+          <Icon name="badge" class="h-6 w-6 text-brand" />
+          <p class="mt-3 text-sm font-semibold uppercase tracking-wide text-ink-soft">Registro profissional</p>
+          <p class="mt-1 text-lg font-bold text-ink">{CREFITO}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-white">
+    <div class="mx-auto max-w-6xl px-5 py-16 md:px-8">
+      <h2 class="text-2xl font-extrabold tracking-tight text-ink md:text-3xl">Como funciona o primeiro contato</h2>
+      <div class="mt-10 grid gap-6 sm:grid-cols-3">
+        {
+          [
+            { n: "01", title: "Você manda mensagem", text: "Conta o que precisa: pediatria, geriatria ou pilates, e um pouco da situação." },
+            { n: "02", title: "Eu te respondo", text: "Explico como funciona o atendimento domiciliar e tiro suas dúvidas, com calma." },
+            { n: "03", title: "Agendamos a visita", text: "Combinamos data e horário da primeira avaliação." },
+          ].map((step) => (
+            <div class="rounded-2xl border border-mint-border p-6">
+              <p class="text-sm font-extrabold text-pink-deep">{step.n}</p>
+              <p class="mt-2 text-base font-bold text-ink">{step.title}</p>
+              <p class="mt-2 leading-relaxed text-ink-soft">{step.text}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

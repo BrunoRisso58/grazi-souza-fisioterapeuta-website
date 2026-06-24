@@ -1,0 +1,68 @@
+---
+import WhatsAppButton from "./WhatsAppButton.astro";
+import { NAV_LINKS } from "../consts";
+
+const currentPath = new URL(Astro.request.url).pathname;
+---
+
+<header class="sticky top-0 z-40 border-b border-mint-border bg-white/90 backdrop-blur-sm">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 md:px-8">
+    <a href="/" class="flex items-center gap-2.5">
+      <img src="/img/logo-icon.png" alt="" class="h-9 w-9" />
+      <span class="flex items-baseline gap-2">
+        <span class="text-xl font-extrabold tracking-tight text-ink">Grazi Souza</span>
+        <span class="hidden text-sm font-medium text-ink-soft sm:inline">fisioterapeuta · Campinas</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 md:flex" aria-label="Navegação principal">
+      {
+        NAV_LINKS.map((link) => {
+          const isActive =
+            link.href === "/" ? currentPath === "/" : currentPath.startsWith(link.href);
+          return (
+            <a
+              href={link.href}
+              class={`text-base font-medium transition-colors duration-200 hover:text-brand ${
+                isActive ? "text-brand" : "text-ink-soft"
+              }`}
+              aria-current={isActive ? "page" : undefined}
+            >
+              {link.label}
+            </a>
+          );
+        })
+      }
+    </nav>
+
+    <div class="hidden md:block">
+      <WhatsAppButton label="Agendar" class="px-5 py-2.5 text-sm" />
+    </div>
+
+    <details class="relative md:hidden">
+      <summary
+        class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-full border border-mint-border text-ink"
+        aria-label="Abrir menu"
+      >
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </summary>
+      <nav
+        class="absolute right-0 top-12 flex w-52 flex-col gap-1 rounded-2xl border border-mint-border bg-white p-3 shadow-lg"
+        aria-label="Navegação móvel"
+      >
+        {
+          NAV_LINKS.map((link) => (
+            <a
+              href={link.href}
+              class="rounded-xl px-3 py-2 text-base font-medium text-ink-soft hover:bg-mint hover:text-brand"
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </nav>
+    </details>
+  </div>
+</header>

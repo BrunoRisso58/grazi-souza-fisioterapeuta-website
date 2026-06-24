@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "Inter", system-ui, sans-serif;
+
+  /* Branco — fundo principal */
+  --color-bg: #ffffff;
+
+  /* Verde menta claro — fundo alternativo / cards */
+  --color-mint: #eaf6ef;
+  --color-mint-border: #d7ecdf;
+
+  /* Verde esmeralda — texto principal e marca */
+  --color-ink: #0b4f3d;
+  --color-ink-soft: #3f5c53;
+  --color-brand: #0e7c5a;
+  --color-brand-dark: #0a5c43;
+
+  /* Rosa bebê — destaque / CTA decorativo */
+  --color-pink: #f7b8d2;
+  --color-pink-soft: #fce3ec;
+  --color-pink-deep: #d6447e;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Base um pouco maior que o padrão (16px) — público inclui idosos, legibilidade vem antes de tudo */
+  font-size: 17px;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
