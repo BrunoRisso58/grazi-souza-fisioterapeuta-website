@@ -1,9 +1,12 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
+import { supabasePublic } from "../../lib/supabase";
 
-const allPosts = await getCollection("blog", ({ data }) => !data.draft);
-const posts = allPosts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+const { data: posts } = await supabasePublic
+  .from("posts")
+  .select("slug, title, description, published_at")
+  .eq("published", true)
+  .order("published_at", { ascending: false });
 ---
 
 <Layout title="Blog">
@@ -19,20 +22,20 @@ const posts = allPosts.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publ
       </h1>
 
       {
-        posts.length === 0 ? (
+        !posts || posts.length === 0 ? (
           <p class="mt-8 text-ink-soft">Em breve, novos textos por aqui.</p>
         ) : (
           <div class="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {posts.map((post) => (
               <a
-                href={`/blog/${post.id}/`}
+                href={`/blog/${post.slug}/`}
                 class="flex flex-col rounded-2xl border border-mint-border bg-mint p-6 transition-colors duration-200 hover:border-brand"
               >
                 <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">
-                  {post.data.publishedAt.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
+                  {new Date(post.published_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
                 </p>
-                <p class="mt-2 text-lg font-bold text-ink">{post.data.title}</p>
-                <p class="mt-2 leading-relaxed text-ink-soft">{post.data.description}</p>
+                <p class="mt-2 text-lg font-bold text-ink">{post.title}</p>
+                <p class="mt-2 leading-relaxed text-ink-soft">{post.description}</p>
               </a>
             ))}
           </div>

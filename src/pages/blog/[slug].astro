@@ -1,34 +1,32 @@
 ---
-import { getCollection, render } from "astro:content";
+import { marked } from "marked";
 import Layout from "../../layouts/Layout.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { supabasePublic } from "../../lib/supabase";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => !data.draft);
-  return posts.map((post) => ({
-    params: { slug: post.id },
-    props: { post },
-  }));
+const { slug } = Astro.params;
+
+const { data: post } = await supabasePublic.from("posts").select("*").eq("slug", slug).eq("published", true).single();
+
+if (!post) {
+  return Astro.redirect("/blog");
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const contentHtml = marked.parse(post.content);
 ---
 
-<Layout title={post.data.title} description={post.data.description}>
+<Layout title={post.title} description={post.description}>
   <article class="bg-white">
     <div class="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-20">
       <p class="text-xs font-semibold uppercase tracking-wide text-ink-soft">
-        {post.data.publishedAt.toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
-        · {post.data.author}
+        {new Date(post.published_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "long", year: "numeric" })}
+        · {post.author}
       </p>
       <h1 class="mt-3 text-3xl font-extrabold leading-tight tracking-tight text-ink md:text-4xl">
-        {post.data.title}
+        {post.title}
       </h1>
 
-      <div class="prose prose-emerald mt-8 max-w-none text-ink-soft prose-headings:text-ink prose-a:text-brand">
-        <Content />
-      </div>
+      <div class="prose prose-emerald mt-8 max-w-none text-ink-soft prose-headings:text-ink prose-a:text-brand" set:html={contentHtml} />
 
       <div class="mt-12 rounded-3xl bg-ink px-6 py-10 text-center">
         <h2 class="text-xl font-extrabold text-white md:text-2xl">Quer conversar sobre seu caso?</h2>

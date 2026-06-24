@@ -1,0 +1,39 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  showNav?: boolean;
+}
+
+const { title, showNav = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} · Painel</title>
+  </head>
+  <body class="min-h-dvh bg-mint font-sans antialiased">
+    {
+      showNav && (
+        <header class="border-b border-mint-border bg-white">
+          <div class="mx-auto flex max-w-4xl items-center justify-between px-5 py-4">
+            <a href="/admin" class="font-extrabold tracking-tight text-ink">
+              Painel · Grazi Souza
+            </a>
+            <a href="/admin/logout" class="text-sm font-semibold text-ink-soft hover:text-brand">
+              Sair
+            </a>
+          </div>
+        </header>
+      )
+    }
+    <main class="mx-auto max-w-4xl px-5 py-10">
+      <slot />
+    </main>
+  </body>
+</html>

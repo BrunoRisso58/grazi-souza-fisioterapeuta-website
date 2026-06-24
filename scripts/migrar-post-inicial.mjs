@@ -1,18 +1,13 @@
----
-title: "5 motivos pra trocar a clínica pelo conforto de casa"
-description: "Fisioterapia domiciliar pra idosos com dificuldade de locomoção ou recuperação pós-cirúrgica: os motivos reais pra fazer o tratamento em casa, em Campinas e região."
-publishedAt: 2026-06-24
-author: "Grazi Souza"
-keywords:
-  - fisioterapia domiciliar
-  - fisioterapia em casa para idosos
-  - fisioterapia geriátrica
-  - home care idosos campinas
-  - fisioterapia pós-cirúrgica
-draft: false
----
+import { createClient } from "@supabase/supabase-js";
 
-Toda vez que uma família me liga pra perguntar sobre atendimento domiciliar, a história é parecida: o pai ou a mãe tem dificuldade de andar, ou voltou de uma cirurgia há pouco tempo, e levar até a clínica virou um problema maior que o próprio tratamento. Carro, escada, fila, cansaço. No fim, a sessão que devia ajudar acaba sendo mais um desgaste no dia.
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
+
+const post = {
+  slug: "fisioterapia-domiciliar-idosos",
+  title: "5 motivos pra trocar a clínica pelo conforto de casa",
+  description:
+    "Fisioterapia domiciliar pra idosos com dificuldade de locomoção ou recuperação pós-cirúrgica: os motivos reais pra fazer o tratamento em casa, em Campinas e região.",
+  content: `Toda vez que uma família me liga pra perguntar sobre atendimento domiciliar, a história é parecida: o pai ou a mãe tem dificuldade de andar, ou voltou de uma cirurgia há pouco tempo, e levar até a clínica virou um problema maior que o próprio tratamento. Carro, escada, fila, cansaço. No fim, a sessão que devia ajudar acaba sendo mais um desgaste no dia.
 
 Separei aqui os motivos reais pra considerar trocar a clínica pelo atendimento em casa, principalmente quando tem dificuldade de locomoção ou recuperação pós-cirúrgica envolvida.
 
@@ -48,4 +43,24 @@ Alguns sinais ajudam a decidir: dificuldade real de se locomover até o carro ou
 
 ## Como funciona o atendimento comigo
 
-Atendo home care em geriatria e pediatria, em Campinas e região. Antes da primeira sessão, converso com a família pra entender o histórico, o que o médico já orientou e o que a pessoa consegue fazer hoje. A partir disso, monto um plano de tratamento que cabe na casa e na rotina dela, com a evolução acompanhada de perto a cada sessão.
+Atendo home care em geriatria e pediatria, em Campinas e região. Antes da primeira sessão, converso com a família pra entender o histórico, o que o médico já orientou e o que a pessoa consegue fazer hoje. A partir disso, monto um plano de tratamento que cabe na casa e na rotina dela, com a evolução acompanhada de perto a cada sessão.`,
+  keywords: [
+    "fisioterapia domiciliar",
+    "fisioterapia em casa para idosos",
+    "fisioterapia geriátrica",
+    "home care idosos campinas",
+    "fisioterapia pós-cirúrgica",
+  ],
+  author: "Grazi Souza",
+  published: true,
+  published_at: "2026-06-24T00:00:00.000Z",
+};
+
+const { error } = await supabase.from("posts").insert(post);
+
+if (error) {
+  console.error("Erro ao migrar post:", error.message);
+  process.exit(1);
+}
+
+console.log("Post migrado com sucesso:", post.slug);

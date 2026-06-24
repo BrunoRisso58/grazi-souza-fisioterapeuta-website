@@ -1,0 +1,112 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import { isValidSession, SESSION_COOKIE_NAME } from "../../lib/auth";
+import { supabaseAdmin } from "../../lib/supabase";
+
+const session = Astro.cookies.get(SESSION_COOKIE_NAME)?.value;
+if (!isValidSession(session, import.meta.env.SESSION_SECRET)) {
+  return Astro.redirect("/admin/login");
+}
+
+if (Astro.request.method === "POST") {
+  const form = await Astro.request.formData();
+  const action = String(form.get("action") ?? "");
+  const id = String(form.get("id") ?? "");
+
+  if (action === "delete" && id) {
+    await supabaseAdmin.from("posts").delete().eq("id", id);
+  }
+
+  if (action === "toggle-publish" && id) {
+    const { data: current } = await supabaseAdmin.from("posts").select("published, published_at").eq("id", id).single();
+    if (current) {
+      const nextPublished = !current.published;
+      await supabaseAdmin
+        .from("posts")
+        .update({
+          published: nextPublished,
+          published_at: nextPublished && !current.published_at ? new Date().toISOString() : current.published_at,
+        })
+        .eq("id", id);
+    }
+  }
+
+  return Astro.redirect("/admin", 303);
+}
+
+const { data: posts } = await supabaseAdmin.from("posts").select("*").order("created_at", { ascending: false });
+---
+
+<AdminLayout title="Posts">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-extrabold tracking-tight text-ink">Artigos do blog</h1>
+    <a href="/admin/novo" class="rounded-full bg-brand px-5 py-2.5 text-sm font-bold text-white hover:bg-brand-dark">
+      Novo artigo
+    </a>
+  </div>
+
+  <div class="mt-8 space-y-3">
+    {
+      !posts || posts.length === 0 ? (
+        <p class="text-ink-soft">Nenhum artigo ainda.</p>
+      ) : (
+        posts.map((post) => (
+          <div class="flex items-center justify-between rounded-2xl border border-mint-border bg-white p-5">
+            <div>
+              <div class="flex items-center gap-2">
+                <p class="font-bold text-ink">{post.title}</p>
+                <span
+                  class={`rounded-full px-2.5 py-0.5 text-xs font-bold uppercase tracking-wide ${
+                    post.published ? "bg-mint text-brand" : "bg-pink-soft text-pink-deep"
+                  }`}
+                >
+                  {post.published ? "Publicado" : "Rascunho"}
+                </span>
+              </div>
+              <p class="mt-1 text-sm text-ink-soft">/blog/{post.slug}</p>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <a
+                href={`/admin/${post.id}/editar`}
+                class="rounded-full border border-mint-border px-4 py-2 text-sm font-semibold text-ink hover:border-brand"
+              >
+                Editar
+              </a>
+
+              <form method="POST">
+                <input type="hidden" name="action" value="toggle-publish" />
+                <input type="hidden" name="id" value={post.id} />
+                <button
+                  type="submit"
+                  class="rounded-full border border-mint-border px-4 py-2 text-sm font-semibold text-ink hover:border-brand"
+                >
+                  {post.published ? "Despublicar" : "Publicar"}
+                </button>
+              </form>
+
+              <form method="POST" data-confirm="Excluir esse artigo? Não tem como desfazer.">
+                <input type="hidden" name="action" value="delete" />
+                <input type="hidden" name="id" value={post.id} />
+                <button type="submit" class="rounded-full px-4 py-2 text-sm font-semibold text-pink-deep hover:bg-pink-soft">
+                  Excluir
+                </button>
+              </form>
+            </div>
+          </div>
+        ))
+      )
+    }
+  </div>
+
+  <script>
+    document.querySelectorAll("form[data-confirm]").forEach((form) => {
+      form.addEventListener("submit", (event) => {
+        const message = form.getAttribute("data-confirm");
+        if (message && !window.confirm(message)) {
+          event.preventDefault();
+        }
+      });
+    });
+  </script>
+</AdminLayout>
